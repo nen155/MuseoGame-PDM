@@ -42,9 +42,9 @@ public class HObras extends AsyncTask<Void, Integer, List<Obra>> {
     private List<Obra> obras = null;
     private ProgressDialog pDialog;
 
-    public HObras(Context context) {
+    public HObras(Context context,List<Obra> obras) {
         this.context = context;
-        this.obras = new ArrayList<>();
+        this.obras = obras;
     }
 
     @Override
@@ -65,7 +65,6 @@ public class HObras extends AsyncTask<Void, Integer, List<Obra>> {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                ;
 
                 Obra obra = new Obra(objetoJson.getInt("id"), objetoJson.getString("titulo"), fecha, objetoJson.getString("descricpion"), objetoJson.getString("imagen"));
                 obras.add(obra);

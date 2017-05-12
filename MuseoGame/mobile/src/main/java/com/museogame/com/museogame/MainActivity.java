@@ -1,41 +1,49 @@
 package com.museogame.com.museogame;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+import modelos.Obra;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Inicio.OnObraSelectedListener {
 
     private TextView mTextMessage;
 
-    //Paso 1: Obtener la instancia del administrador de fragmentos
-    FragmentManager fragmentManager = getFragmentManager();
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment swicthTo=null;
             switch (item.getItemId()) {
                 case R.id.navigation_inicio:
-                    //Paso 2: Crear una nueva transacción
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_obra:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
+                    swicthTo = new Inicio();
+                    break;
+                /*case R.id.navigation_obra:
+                    return true;*/
                 case R.id.navigation_puntos:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
+                    //swicthTo = new Puntos();
+                    break;
+
             }
-            return false;
+            if(swicthTo!=null){
+                //Paso 1: Obtener la instancia del administrador de fragmentos
+                FragmentManager fragmentManager = getFragmentManager();
+                //Paso 2: Crear una nueva transacción
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragment_container,swicthTo);
+                transaction.commit();
+            }
+            return true;
         }
 
     };
@@ -50,4 +58,8 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    @Override
+    public void onObraSeleccionada(Obra obra) {
+
+    }
 }

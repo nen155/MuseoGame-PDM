@@ -1,12 +1,14 @@
 package adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.museogame.com.museogame.Inicio;
 import com.museogame.com.museogame.R;
 import com.squareup.picasso.Picasso;
 
@@ -18,12 +20,14 @@ public class AdapterObras extends BaseAdapter {
 	private Context context;
 	private List<Obra> obras;
 	private LayoutInflater inflater;
+	private Inicio.OnObraSelectedListener onObraSelectedListener;
 
-	public AdapterObras(Context context, List<Obra> items) {
+	public AdapterObras(Context context, List<Obra> items, Inicio.OnObraSelectedListener onObraSelectedListener) {
 		super();
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.context = context;
 		this.obras = items;
+		this.onObraSelectedListener = onObraSelectedListener;
 	}
 
 	@Override
@@ -55,9 +59,16 @@ public class AdapterObras extends BaseAdapter {
 
 		ImageView imgItem = (ImageView) rowView.findViewById(R.id.imgItem);
 
-		Obra item = this.obras.get(position);
-		String imagen = item.getUrlImagen();
+		final Obra obra = this.obras.get(position);
+		Uri imagen = obra.getUrlImagen();
 		Picasso.with(context).load(imagen).into(imgItem);
+
+		imgItem.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onObraSelectedListener.onObraSeleccionada(obra);
+			}
+		});
 
 		return rowView;
 	}

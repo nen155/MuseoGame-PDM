@@ -1,5 +1,8 @@
 package modelos;
 
+import android.net.Uri;
+
+
 import java.util.Date;
 
 /**
@@ -11,16 +14,15 @@ public class Obra {
     private String titulo;
     private Date fecha;
     private String descripcion;
-    private String urlImagen;
+    private Uri urlImagen;
 
-    public Obra(int id, String titulo, Date fecha, String descripcion, String urlImagen) {
+    public Obra(int id, String titulo, Date fecha, String descripcion, Uri urlImagen) {
         this.id = id;
         this.titulo = titulo;
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.urlImagen = urlImagen;
     }
-
 
     public int getId() {
         return id;
@@ -54,11 +56,11 @@ public class Obra {
         this.descripcion = descripcion;
     }
 
-    public String getUrlImagen() {
+    public Uri getUrlImagen() {
         return urlImagen;
     }
 
-    public void setUrlImagen(String urlImagen) {
+    public void setUrlImagen(Uri urlImagen) {
         this.urlImagen = urlImagen;
     }
 }
