@@ -50,7 +50,7 @@ public class HObras extends AsyncTask<Void, Integer, List<Obra>> {
     @Override
     protected List<Obra> doInBackground(Void... params) {
         String resultado  = ConsultaBBDD.realizarConsulta(ConsultaBBDD.consultaObras, "");
-        JSONArray arrayJson = null;
+       /* JSONArray arrayJson = null;
         try {
             arrayJson = new JSONArray(resultado);
 
@@ -71,7 +71,7 @@ public class HObras extends AsyncTask<Void, Integer, List<Obra>> {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return obras;
     }
@@ -107,7 +107,7 @@ public class HObras extends AsyncTask<Void, Integer, List<Obra>> {
         } else {
             //Si tengo datos los asigno mediante el adapter
             GridView gridObras = (GridView) ((Activity) context).findViewById(R.id.obrasACapurar);
-            gridObras.setAdapter(new AdapterObras(context,result));
+            //gridObras.setAdapter(new AdapterObras(context,result));
             pDialog.dismiss();
         }
     }

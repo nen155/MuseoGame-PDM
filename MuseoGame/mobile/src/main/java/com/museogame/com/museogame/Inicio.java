@@ -1,10 +1,11 @@
 package com.museogame.com.museogame;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import adapter.AdapterObras;
 import hebras.HObras;
@@ -34,7 +36,7 @@ public class Inicio extends Fragment {
 
     //ArrayList de obras para cargar y pasar cuando se cambie de Fragment
     List<Obra> obras = new ArrayList<>();
-
+    String[] imagenes ={"noche_estrellada.jpg","david_ma.jpg","guernica_picasso.jpg","hilanderas.jpg","mona_lisa.jpg","velazquez.jpg"};
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -85,17 +87,18 @@ public class Inicio extends Fragment {
         // Inflate the layout for this fragment
         View fragmen =inflater.inflate(R.layout.fragment_inicio, container, false);
 
-        GridView gridObras = (GridView) ((Activity) getContext()).findViewById(R.id.obrasACapurar);
+        GridView gridObras = (GridView) fragmen.findViewById(R.id.obrasACapurar);
 
         for(int i=0;i<6;++i){
-
+            Random r = new Random();
+            int factor = r.nextInt(6);
             Date fecha = new Date();
-            Uri imagenUri=Uri.parse("R.mipmap.ic_launcher");
-            Obra obra = new Obra(i+1, "Obra"+i, fecha, "Descripcion obra "+i+" Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, ", imagenUri);
+            Uri imagenUri=Uri.parse("file:///android_asset/" +imagenes[i]);
+            Obra obra = new Obra(i+1, "VistaObra"+i, fecha, "Descripcion obra "+i+" Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, ", imagenUri,200*factor,"Tipo "+i);
             obras.add(obra);
         }
         //Si tengo datos los asigno mediante el adapter
-        gridObras.setAdapter(new AdapterObras(getContext(),obras,mListener));
+        gridObras.setAdapter(new AdapterObras(getActivity(),obras,mListener));
 
         //LO HACEMOS TODO EN LOCAL POR LO QUE NO LO NECESITAMOS
         //Ejecuto la hebra para que rellene el GridView

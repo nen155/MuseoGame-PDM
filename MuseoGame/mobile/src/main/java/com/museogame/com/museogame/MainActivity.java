@@ -14,9 +14,17 @@ import modelos.Obra;
 
 public class MainActivity extends AppCompatActivity implements Inicio.OnObraSelectedListener {
 
-    private TextView mTextMessage;
 
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container,new Inicio());
+        transaction.commit();
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -31,15 +39,13 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
                 /*case R.id.navigation_obra:
                     return true;*/
                 case R.id.navigation_puntos:
-                    //swicthTo = new Puntos();
+                    //ANTONIO TU PARTE!!!!!!!!!!!!!!!!!!!
+                    swicthTo = new Puntos();
                     break;
 
             }
             if(swicthTo!=null){
-                //Paso 1: Obtener la instancia del administrador de fragmentos
-                FragmentManager fragmentManager = getFragmentManager();
-                //Paso 2: Crear una nueva transacción
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container,swicthTo);
                 transaction.commit();
             }
@@ -49,17 +55,11 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
-
-    @Override
     public void onObraSeleccionada(Obra obra) {
 
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        Fragment vistaObra = VistaObra.newInstance(obra);
+        transaction.replace(R.id.fragment_container,vistaObra);
+        transaction.commit();
     }
 }
