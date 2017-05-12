@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/linearcontainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,7 +20,6 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
@@ -25,4 +30,17 @@
         android:background="?android:attr/windowBackground"
         app:menu="@menu/navigation" />
 
+
 </LinearLayout>
+
+    <ru.dimorinny.floatingtextbutton.FloatingTextButton
+        android:id="@+id/action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:floating_background_color="#3999c3"
+        app:floating_title="CAPTURA LA OBRA!"
+        app:floating_title_color="@android:color/white"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="100dp"
+        />
+</android.support.design.widget.CoordinatorLayout>
