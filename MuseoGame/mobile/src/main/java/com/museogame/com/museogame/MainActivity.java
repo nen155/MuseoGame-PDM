@@ -1,28 +1,34 @@
 package com.museogame.com.museogame;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import modelos.Obra;
 
 public class MainActivity extends AppCompatActivity implements Inicio.OnObraSelectedListener {
 
+    ArrayList<Obra> obras = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        obras = getIntent().getExtras().getParcelableArrayList("obras") ;
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container,new Inicio());
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container,Inicio.newInstance(obras));
         transaction.commit();
     }
 
@@ -34,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
             Fragment swicthTo=null;
             switch (item.getItemId()) {
                 case R.id.navigation_inicio:
-                    swicthTo = new Inicio();
+                    swicthTo = Inicio.newInstance(obras);
                     break;
                 /*case R.id.navigation_obra:
                     return true;*/
@@ -45,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
 
             }
             if(swicthTo!=null){
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container,swicthTo);
                 transaction.commit();
             }
@@ -57,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
     @Override
     public void onObraSeleccionada(Obra obra) {
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment vistaObra = VistaObra.newInstance(obra);
         transaction.replace(R.id.fragment_container,vistaObra);
         transaction.commit();

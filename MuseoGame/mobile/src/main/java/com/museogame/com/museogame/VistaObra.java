@@ -1,7 +1,7 @@
 package com.museogame.com.museogame;
 
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,13 +65,14 @@ public class VistaObra extends Fragment {
         // Inflate the layout for this fragment
         View viewObra = inflater.inflate(R.layout.fragment_obra, container, false);;
         ImageView imagenObra = (ImageView)viewObra.findViewById(R.id.imagenObra);
+        TextView puntos = (TextView)viewObra.findViewById(R.id.puntos);
         TextView tipo = (TextView)viewObra.findViewById(R.id.tipo);
         TextView fecha = (TextView)viewObra.findViewById(R.id.fecha);
         TextView titulo = (TextView)viewObra.findViewById(R.id.titulo);
         TextView descripcion = (TextView)viewObra.findViewById(R.id.descripcion);
 
-        Picasso.with(getContext()).load(obra.getUrlImagen()).into(imagenObra);
-
+        Picasso.with(getActivity()).load(obra.getUrlImagen()).into(imagenObra);
+        puntos.setText("Con esta obra has obtenido: "+obra.getPuntos()+"!");
         tipo.setText(obra.getTipo());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy", Locale.getDefault());
         fecha.setText(dateFormat.format(obra.getFecha()));

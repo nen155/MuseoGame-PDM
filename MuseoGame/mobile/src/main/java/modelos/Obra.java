@@ -19,6 +19,7 @@ public class Obra implements Parcelable {
     private Uri urlImagen;
     private int puntos;
     private String tipo;
+    private String encontrada;
 
     public Obra(int id, String titulo, Date fecha, String descripcion, Uri urlImagen, int puntos, String tipo) {
         this.id = id;
@@ -38,6 +39,7 @@ public class Obra implements Parcelable {
         urlImagen = in.readParcelable(Uri.class.getClassLoader());
         puntos = in.readInt();
         tipo = in.readString();
+        encontrada = in.readString();
     }
 
     public static final Creator<Obra> CREATOR = new Creator<Obra>() {
@@ -108,6 +110,14 @@ public class Obra implements Parcelable {
         this.urlImagen = urlImagen;
     }
 
+    public String getEncontrada() {
+        return encontrada;
+    }
+
+    public void setEncontrada(String encontrada) {
+        this.encontrada = encontrada;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -122,5 +132,6 @@ public class Obra implements Parcelable {
         dest.writeParcelable(urlImagen, flags);
         dest.writeInt(puntos);
         dest.writeString(tipo);
+        dest.writeString(encontrada);
     }
 }

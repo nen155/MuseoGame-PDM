@@ -1,26 +1,17 @@
 package com.museogame.com.museogame;
 
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 
 import adapter.AdapterObras;
-import hebras.HObras;
 import modelos.Obra;
 
 
@@ -35,17 +26,9 @@ import modelos.Obra;
 public class Inicio extends Fragment {
 
     //ArrayList de obras para cargar y pasar cuando se cambie de Fragment
-    List<Obra> obras = new ArrayList<>();
-    String[] imagenes ={"noche_estrellada.jpg","david_ma.jpg","guernica_picasso.jpg","hilanderas.jpg","mona_lisa.jpg","velazquez.jpg"};
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private ArrayList<Obra> obras = new ArrayList<>();
+    private static final String ARG_OBRAS = "obras";
+    private GridView gridObras;
 
     private OnObraSelectedListener mListener;
 
@@ -57,17 +40,14 @@ public class Inicio extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param obras Parameter 1.
      * @return A new instance of fragment Inicio.
      */
     // TODO: Rename and change types and number of parameters
-    public static Inicio newInstance(String param1, String param2) {
+    public static Inicio newInstance(ArrayList<Obra> obras) {
         Inicio fragment = new Inicio();
         Bundle args = new Bundle();
-       // args.putSerializable("lista-obras",);
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelableArrayList(ARG_OBRAS, obras);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,8 +56,7 @@ public class Inicio extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            obras = getArguments().getParcelableArrayList(ARG_OBRAS);
         }
     }
 
@@ -87,25 +66,17 @@ public class Inicio extends Fragment {
         // Inflate the layout for this fragment
         View fragmen =inflater.inflate(R.layout.fragment_inicio, container, false);
 
-        GridView gridObras = (GridView) fragmen.findViewById(R.id.obrasACapurar);
+        gridObras = (GridView) fragmen.findViewById(R.id.obrasACapurar);
 
-        for(int i=0;i<6;++i){
-            Random r = new Random();
-            int factor = r.nextInt(6);
-            Date fecha = new Date();
-            Uri imagenUri=Uri.parse("file:///android_asset/" +imagenes[i]);
-            Obra obra = new Obra(i+1, "VistaObra"+i, fecha, "Descripcion obra "+i+" Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, ", imagenUri,200*factor,"Tipo "+i);
-            obras.add(obra);
-        }
-        //Si tengo datos los asigno mediante el adapter
-        gridObras.setAdapter(new AdapterObras(getActivity(),obras,mListener));
-
-        //LO HACEMOS TODO EN LOCAL POR LO QUE NO LO NECESITAMOS
-        //Ejecuto la hebra para que rellene el GridView
-        /*HObras hObras = new HObras(getContext(),obras);
-        hObras.execute();*/
 
         return fragmen;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //Si tengo datos los asigno mediante el adapter
+        gridObras.setAdapter(new AdapterObras(getActivity(),obras,mListener));
     }
 
     // TODO: Rename method, update argument and hook method into UI event
