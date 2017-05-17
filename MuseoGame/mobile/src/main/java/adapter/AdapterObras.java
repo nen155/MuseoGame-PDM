@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.museogame.com.museogame.ActivityNFCScanner;
 import com.museogame.com.museogame.ActivityQRScanner;
 import com.museogame.com.museogame.Inicio;
 import com.museogame.com.museogame.R;
@@ -77,7 +78,7 @@ public class AdapterObras extends BaseAdapter {
 				if(obra.getEncontrada().compareTo("ENCONTRADA!")==0)
 					onObraSelectedListener.onObraSeleccionada(obra);
 				else{
-					Intent intent = new Intent(context, ActivityQRScanner.class);
+					Intent intent = new Intent(context, ActivityNFCScanner.class);
 					//Le pasamos la obra a buscar con el QR para que si escanea otro QR le diga que no es correcto
 					intent.putExtra("obra",obra);
 					context.startActivity(intent);

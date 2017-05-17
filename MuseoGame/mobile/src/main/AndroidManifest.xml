@@ -2,12 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.museogame.com.museogame">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
     <uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
     <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +24,10 @@
         <activity android:name=".ActivityQRScanner"
             android:screenOrientation="portrait"
             android:label="QRScanner"/>
+        <activity android:name=".ActivityRequestCameraPermission"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ActivityNFCScanner"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".PantallaInicial"
             android:configChanges="orientation|keyboardHidden|screenSize"
