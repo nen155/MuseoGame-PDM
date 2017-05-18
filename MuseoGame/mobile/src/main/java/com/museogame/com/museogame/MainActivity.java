@@ -1,11 +1,13 @@
 package com.museogame.com.museogame;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -67,5 +69,20 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
         Fragment vistaObra = VistaObra.newInstance(obra);
         transaction.replace(R.id.fragment_container,vistaObra);
         transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this).setMessage(R.string.exit_Message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                        System.exit(0);
+
+                    }
+                })
+                .setNegativeButton(R.string.No, null)
+                .show();
     }
 }

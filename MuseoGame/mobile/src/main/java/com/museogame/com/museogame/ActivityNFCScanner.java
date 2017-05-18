@@ -137,14 +137,14 @@ public class ActivityNFCScanner extends ActionBarActivity {
 
 
 
-
+/*
     @Override
     public void onBackPressed() {
-        Intent mainIntent = new Intent(this, MainActivity.class);
+        Intent mainIntent = new Intent(this, Inicio.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
 
-    }
+    }*/
 
     private void handleIntent(Intent intent) {
         // TODO: handle Intent
