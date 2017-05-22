@@ -2,14 +2,19 @@ package com.museogame.com.museogame;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import adapter.AdapterPuntos;
 import modelos.Obra;
+import utilidades.ControllerPreferences;
 
 
 /**
@@ -22,6 +27,8 @@ public class Puntos extends Fragment {
     private ArrayList<Obra> obras = new ArrayList<>();
     private static final String ARG_OBRAS = "obras";
 
+    ListView listview;
+
 
     public Puntos() {
         // Required empty public constructor
@@ -30,15 +37,13 @@ public class Puntos extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param obras Parameter 1.
      * @return A new instance of fragment Puntos.
      */
     // TODO: Rename and change types and number of parameters
-    public static Puntos newInstance(ArrayList<Obra> obras) {
+    public static Puntos newInstance() {
         Puntos fragment = new Puntos();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_OBRAS, obras);
+        //args.putParcelableArrayList(ARG_OBRAS, obras);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,16 +51,66 @@ public class Puntos extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            obras = getArguments().getParcelableArrayList(ARG_OBRAS);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View fragmen =inflater.inflate(R.layout.fragment_puntos, container, false);
+        ControllerPreferences preferences= ControllerPreferences.getInstance();
+        ListView lista = (ListView) fragmen.findViewById(R.id.lista);
+
+        //lista.add
+        obras = preferences.getObras();
+        int contador = preferences.getPuntos();
+
+        TextView puntos = (TextView) fragmen.findViewById(R.id.puntos);
+
+        puntos.setText("¡Has conseguido: " + contador + " puntos en total!");
+
+        ArrayList<Obra> obrasFiltradas = new ArrayList<>();
+
+        for(int i = 0; i < obras.size(); i++){
+            if(obras.get(i).getEncontrada().compareTo("ENCONTRADA!")==0){
+                obrasFiltradas.add(obras.get(i));
+            }
+        }
+        /*
+        listview = (ListView) fragmen.findViewById(R.id.listview);
+        listview.setAdapter(new AdapterPuntos(fragmen.getContext(), obrasFiltradas));*/
+
+
         return inflater.inflate(R.layout.fragment_puntos, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //Si tengo datos los asigno mediante el adapter
+
+        ControllerPreferences preferences= ControllerPreferences.getInstance();
+        ListView lista = (ListView) view.findViewById(R.id.lista);
+
+        //lista.add
+        obras = preferences.getObras();
+        int contador = preferences.getPuntos();
+
+        TextView puntos = (TextView) view.findViewById(R.id.puntos);
+
+        puntos.setText("¡Has conseguido: " + contador + " puntos en total!");
+
+        ArrayList<Obra> obrasFiltradas = new ArrayList<>();
+
+        for(int i = 0; i < obras.size(); i++){
+            if(obras.get(i).getEncontrada().compareTo("ENCONTRADA!")==0){
+                obrasFiltradas.add(obras.get(i));
+            }
+        }
+
+        listview = (ListView) view.findViewById(R.id.listview);
+        listview.setAdapter(new AdapterPuntos(view.getContext(), obrasFiltradas));
     }
 
 }

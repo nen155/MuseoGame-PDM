@@ -72,7 +72,7 @@ public class VistaObra extends Fragment {
         TextView descripcion = (TextView)viewObra.findViewById(R.id.descripcion);
 
         Picasso.with(getActivity()).load(obra.getUrlImagen()).into(imagenObra);
-        puntos.setText("Con esta obra has obtenido: "+obra.getPuntos()+"!");
+        puntos.setText("¡Con esta obra has obtenido: "+obra.getPuntos()+" puntos !");
         tipo.setText(obra.getTipo());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy", Locale.getDefault());
         fecha.setText(dateFormat.format(obra.getFecha()));

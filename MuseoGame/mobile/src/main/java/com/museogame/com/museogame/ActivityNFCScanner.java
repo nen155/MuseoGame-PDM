@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 
+import utilidades.ControllerPreferences;
+
 public class ActivityNFCScanner extends ActionBarActivity {
 
     private static final int NFC_REQUEST = 2;
@@ -83,10 +85,14 @@ public class ActivityNFCScanner extends ActionBarActivity {
 
             String tagContent = getTextFromNdefRecord(ndefRecord);
 
+
             try {
                 int id_result = Integer.parseInt(tagContent);
+                ControllerPreferences preferences= ControllerPreferences.getInstance();
+
+                preferences.setEncontrada(id_result);
                 Intent mainIntent = new Intent(this, MainActivity.class);
-                mainIntent.putExtra("qrornfc",tagContent);
+                //mainIntent.putExtra("qrornfc",tagContent);
                 startActivity(mainIntent);
 
             }catch (Exception e){

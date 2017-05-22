@@ -33,7 +33,7 @@ public class PantallaInicial extends AppCompatActivity {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             ///CARGAMOS LAS OBRAS ESTO DEBERÍA VENIR DEL SERVIDOR
-            for(int i=0;i<6;++i){
+            /*for(int i=0;i<6;++i){
                 Random r = new Random();
                 int factor = r.nextInt(6);
                 Date fecha = new Date();
@@ -52,7 +52,8 @@ public class PantallaInicial extends AppCompatActivity {
             /*HObras hObras = new HObras(getContext(),obras);
             hObras.execute();*/
             Intent intent = new Intent(context,MainActivity.class);
-            intent.putParcelableArrayListExtra("obras",obras);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            //intent.putParcelableArrayListExtra("obras",obras);
             startActivity(intent);
 
             return false;
