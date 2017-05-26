@@ -89,7 +89,7 @@ public class ActivityQRScanner extends AppCompatActivity implements QRCodeReader
 
         try {
             int id_result = Integer.parseInt(text);
-            ControllerPreferences preferences= ControllerPreferences.getInstance();
+            ControllerPreferences preferences= ControllerPreferences.getInstance(null);
 
             preferences.setEncontrada(id_result);
            // preferences.ganarPuntos(id_result);

@@ -53,12 +53,16 @@ public class MainActivity extends WearableActivity {
             mContainerView.setBackgroundColor(getResources().getColor(android.R.color.black));
             mTextView.setTextColor(getResources().getColor(android.R.color.white));
             mClockView.setVisibility(View.VISIBLE);
+            mClockView.setTextColor(getResources().getColor(android.R.color.white));
 
             mClockView.setText(AMBIENT_DATE_FORMAT.format(new Date()));
         } else {
             mContainerView.setBackground(null);
             mTextView.setTextColor(getResources().getColor(android.R.color.black));
-            mClockView.setVisibility(View.GONE);
+
+
+            mClockView.setTextColor(getResources().getColor(android.R.color.black));
+            mClockView.setText(AMBIENT_DATE_FORMAT.format(new Date()));
         }
     }
 }

@@ -59,7 +59,7 @@ public class Puntos extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragmen =inflater.inflate(R.layout.fragment_puntos, container, false);
-        ControllerPreferences preferences= ControllerPreferences.getInstance();
+        ControllerPreferences preferences= ControllerPreferences.getInstance(null);
         ListView lista = (ListView) fragmen.findViewById(R.id.lista);
 
         //lista.add
@@ -90,7 +90,7 @@ public class Puntos extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //Si tengo datos los asigno mediante el adapter
 
-        ControllerPreferences preferences= ControllerPreferences.getInstance();
+        ControllerPreferences preferences= ControllerPreferences.getInstance(null);
         ListView lista = (ListView) view.findViewById(R.id.lista);
 
         //lista.add

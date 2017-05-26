@@ -88,7 +88,7 @@ public class ActivityNFCScanner extends ActionBarActivity {
 
             try {
                 int id_result = Integer.parseInt(tagContent);
-                ControllerPreferences preferences= ControllerPreferences.getInstance();
+                ControllerPreferences preferences= ControllerPreferences.getInstance(null);
 
                 preferences.setEncontrada(id_result);
                 Intent mainIntent = new Intent(this, MainActivity.class);
