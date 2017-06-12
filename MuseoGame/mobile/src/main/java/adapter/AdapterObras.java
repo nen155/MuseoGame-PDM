@@ -3,6 +3,7 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,11 +79,13 @@ public class AdapterObras extends BaseAdapter {
 				if(obra.getEncontrada().compareTo("ENCONTRADA!")==0)
 					onObraSelectedListener.onObraSeleccionada(obra);
 				else{
-					Intent intent = new Intent(context, ActivityNFCScanner.class);
-					//Le pasamos la obra a buscar con el QR para que si escanea otro QR le diga que no es correcto
-					intent.putExtra("obra",obra);
-					context.startActivity(intent);
-
+					if(NfcAdapter.getDefaultAdapter(context)==null){
+						Intent intent = new Intent(context, ActivityQRScanner.class);
+						context.startActivity(intent);
+					}else {
+						Intent intent = new Intent(context, ActivityNFCScanner.class);
+						context.startActivity(intent);
+					}
 					///Por si cambiamos de interfaz a botón flotante QUEDA FEO....
 					/*Toast toast = Toast.makeText(context,"Aún no me has encontrado sigue BUSCANDO!",Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER,0,0);

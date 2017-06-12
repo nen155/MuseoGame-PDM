@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -56,25 +57,25 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
     ControllerPreferences preferences;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         if(preferences.getScaning()){
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             bluetooth.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.enable)));
             tBluetooth.setText("on");
 
 
         }else
         {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             bluetooth.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.disable)));
             tBluetooth.setText("off");
 
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,12 +97,14 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
         thread = preferences.thread;
 
         if(!preferences.getScaning()){
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             bluetooth.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.enable)));
             tBluetooth.setText("on");
 
 
         }else
         {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             bluetooth.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.disable)));
             tBluetooth.setText("off");
 
@@ -114,16 +117,17 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public void scan(View view) throws Throwable {
 
         if(preferences.getScaning()){
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             bluetooth.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.enable)));
             tBluetooth.setText("on");
             preferences.setScaning(false);
 
         }else
         {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             bluetooth.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.disable)));
             tBluetooth.setText("off");
             preferences.setScaning(true);
@@ -132,8 +136,9 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     private void buscar() throws Throwable {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         checkBTPermissions();
 
         if(preferences.getScaning())
@@ -146,17 +151,17 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void checkBTPermissions() {
 
         //Toast.makeText(getApplicationContext(),"Pedimos permisos", Toast.LENGTH_SHORT).show();
-
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
             permissionCheck += this.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
             if (permissionCheck != 0) {
 
                 this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1001); //Any number
             }
+        }
 
     }
 
@@ -199,9 +204,13 @@ public class MainActivity extends AppCompatActivity implements Inicio.OnObraSele
     }
 
     public void scanObra(View v){
-        Intent intent = new Intent(this,ActivityNFCScanner.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        if(NfcAdapter.getDefaultAdapter(this)==null){
+            Intent intent = new Intent(this, ActivityQRScanner.class);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(this, ActivityNFCScanner.class);
+            startActivity(intent);
+        }
     }
 
     @Override

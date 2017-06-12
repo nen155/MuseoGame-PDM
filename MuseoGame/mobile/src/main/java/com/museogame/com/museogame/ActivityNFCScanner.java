@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 
+import modelos.Obra;
 import utilidades.ControllerPreferences;
 
 public class ActivityNFCScanner extends ActionBarActivity {
@@ -34,6 +35,7 @@ public class ActivityNFCScanner extends ActionBarActivity {
         resultTextView = (TextView) findViewById(R.id.textView_Prueba2);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
 
         if (!nfcAdapter.isEnabled()) {
             Toast.makeText(this,getString(R.string.NFC_Error_Disabled), Toast.LENGTH_LONG).show();
